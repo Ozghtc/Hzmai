@@ -20,7 +20,6 @@ function App() {
   const [extractedList, setExtractedList] = useState<any>([]);
   const [remainingList, setRemainingList] = useState<any>([]);
   const [selectedFolders, setSelectedFolders] = useState<string[]>([]);
-  const [folderStatusMap, setFolderStatusMap] = useState<Record<string, string>>({});
   const chatBoxRef = useRef<any>(null);
 
   useEffect(() => {
@@ -116,20 +115,6 @@ function App() {
     setRemainingList([]);
   };
 
-  // Klasör adına göre w3schools'da içerik var mı kontrolü
-  const checkContentExists = async (folder: string) => {
-    // Klasörün son parçasını al (örn. Kod/Frontend -> frontend)
-    const topic = folder.split('/').pop()?.toLowerCase();
-    if (!topic) return false;
-    const url = `https://www.w3schools.com/${topic}`;
-    try {
-      const res = await fetch(url, { method: 'HEAD' });
-      return res.status === 200;
-    } catch {
-      return false;
-    }
-  };
-
   return (
     <Router>
       <Routes>
@@ -172,7 +157,6 @@ function App() {
               <EgitimTree
                 selectedFolders={selectedFolders}
                 setSelectedFolders={setSelectedFolders}
-                folderStatusMap={folderStatusMap}
               />
             </div>
             <div style={{ width: '50vw', height: '100vh', display: 'flex', alignItems: 'stretch', justifyContent: 'flex-start' }}>
@@ -190,7 +174,6 @@ function App() {
                 handleExtract={handleExtract}
                 handleSaveEdu={handleSaveEdu}
                 selectedFolders={selectedFolders}
-                folderStatusMap={folderStatusMap}
       />
     </div>
           </div>

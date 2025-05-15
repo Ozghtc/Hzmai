@@ -14,7 +14,7 @@ function getAllPaths(node: any, path = ''): string[] {
   return paths;
 }
 
-function TreeView({ node, checked, onCheck, path = '', folderStatusMap }: { node: any, checked: string[], onCheck: (id: string, children: string[]) => void, path?: string, folderStatusMap: Record<string, string> }) {
+function TreeView({ node, checked, onCheck, path = '' }: { node: any, checked: string[], onCheck: (id: string, children: string[]) => void, path?: string }) {
   const [open, setOpen] = useState(false);
   if (!node) return null;
   const currentPath = path ? `${path}/${node.name}` : node.name;
@@ -44,14 +44,11 @@ function TreeView({ node, checked, onCheck, path = '', folderStatusMap }: { node
         >
           {open ? '▼' : '▶'} {node.name}
         </span>
-        <span style={{ marginLeft: 'auto', fontSize: '0.9em', minWidth: 90, textAlign: 'right' }}>
-          {folderStatusMap[currentPath]}
-        </span>
       </div>
       {open && node.children && (
         <ul style={{ marginLeft: 16 }}>
           {node.children.map((child: any, idx: number) => (
-            <TreeView key={idx} node={child} checked={checked} onCheck={onCheck} path={currentPath} folderStatusMap={folderStatusMap} />
+            <TreeView key={idx} node={child} checked={checked} onCheck={onCheck} path={currentPath} />
           ))}
         </ul>
       )}
@@ -59,10 +56,9 @@ function TreeView({ node, checked, onCheck, path = '', folderStatusMap }: { node
   );
 }
 
-export default function EgitimTree({ selectedFolders, setSelectedFolders, folderStatusMap }: {
+export default function EgitimTree({ selectedFolders, setSelectedFolders }: {
   selectedFolders: string[],
-  setSelectedFolders: (folders: string[]) => void,
-  folderStatusMap: Record<string, string>
+  setSelectedFolders: (folders: string[]) => void
 }) {
   const [tree, setTree] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -150,7 +146,7 @@ export default function EgitimTree({ selectedFolders, setSelectedFolders, folder
         </span>
       </div>
       <ul style={{ listStyle: 'none', paddingLeft: 0 }}>
-        <TreeView node={tree} checked={selectedFolders} onCheck={handleCheck} folderStatusMap={folderStatusMap} />
+        <TreeView node={tree} checked={selectedFolders} onCheck={handleCheck} />
       </ul>
       {/* Klasör Teklifi */}
       {missingTopicsDetailed.length > 0 && (

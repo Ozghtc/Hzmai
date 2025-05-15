@@ -21,7 +21,6 @@ interface TrainingPanelProps {
   handleExtract: any;
   handleSaveEdu: any;
   selectedFolders: string[];
-  folderStatusMap: Record<string, string>;
 }
 
 function TrainingPanel({
@@ -33,7 +32,7 @@ function TrainingPanel({
   extractedList,
   remainingList,
   handleExtract, handleSaveEdu,
-  selectedFolders, folderStatusMap
+  selectedFolders
 }: TrainingPanelProps) {
   const [showDetails, setShowDetails] = React.useState(false);
   const [lastData, setLastData] = React.useState<{title: string, headings: string[], paragraphs: string[]} | null>(null);
@@ -276,7 +275,6 @@ function TrainingPanel({
                   {selectedFolders.map(folder => (
                     <li key={folder} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                       <span>{folder}</span>
-                      <span style={{ marginLeft: 8, fontSize: '0.95em' }}>{folderStatusMap[folder]}</span>
                     </li>
                   ))}
                 </ul>
