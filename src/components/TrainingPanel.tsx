@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, IconButton, Collapse, Stack, TextField, Button, Chip, Paper } from '@mui/material';
+import { Box, Typography, Collapse, Stack, TextField, Button, Chip, Paper } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import LanguageIcon from '@mui/icons-material/Language';
@@ -44,7 +44,6 @@ function TrainingPanel({
       // Basit bir ayrıştırıcı, daha gelişmişi backend'den dönebilir
       const titleMatch = eduResult.match(/Başlık: (.*?)\\n/);
       const headingsMatch = eduResult.match(/Başlıklar: (.*?)\\n/);
-      const paragraphsMatch = eduResult.match(/Paragraflar: (.*?) adet/);
       setLastData({
         title: titleMatch ? titleMatch[1] : '',
         headings: headingsMatch ? headingsMatch[1].split(', ') : [],

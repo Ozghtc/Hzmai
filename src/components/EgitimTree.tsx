@@ -125,14 +125,14 @@ export default function EgitimTree({ selectedFolders, setSelectedFolders, folder
 
   // Akıllı eşleştirme tablosu
   const topicMap: Record<string, string> = {
-    'html': 'Diller', 'css': 'Diller', 'js': 'Diller', 'python': 'Diller', 'sql': 'Diller', 'php': 'Diller', 'c': 'Diller', 'c++': 'Diller', 'java': 'Diller', 'xml': 'Diller', 'json': 'Diller', 'typescript': 'Diller', 'sass': 'Diller', 'go': 'Diller', 'kotlin': 'Diller', 'r': 'Diller', 'swift': 'Diller', 'perl': 'Diller', 'ruby': 'Diller', 'scala': 'Diller', 'rust': 'Diller', 'assembly': 'Diller', 'bash': 'Diller', 'fortran': 'Diller', 'csharp': 'Diller', 'vb': 'Diller', 'dart': 'Diller',
-    'bootstrap': 'Kod/Frontend', 'jquery': 'Kod/Frontend', 'vue': 'Kod/Frontend', 'angular': 'Kod/Frontend', 'w3css': 'Kod/Frontend', 'sass': 'Kod/Frontend',
-    'php': 'Kod/Backend', 'python': 'Kod/Backend', 'nodejs': 'Kod/Backend', 'django': 'Kod/Backend', 'go': 'Kod/Backend', 'java': 'Kod/Backend', 'asp': 'Kod/Backend', 'firebase': 'Kod/Backend', 'graphql': 'Kod/Backend', 'ruby': 'Kod/Backend', 'rust': 'Kod/Backend', 'csharp': 'Kod/Backend',
-    'sql': 'Kod/Veri', 'mongodb': 'Kod/Veri', 'json': 'Kod/Veri', 'excel': 'Kod/Veri', 'access': 'Kod/Veri',
+    'html': 'Diller', 'css': 'Diller', 'js': 'Diller', 'python': 'Diller', 'sql': 'Diller', 'php': 'Diller', 'c': 'Diller', 'c++': 'Diller', 'java': 'Diller', 'xml': 'Diller', 'json': 'Diller', 'typescript': 'Diller', 'sass': 'Kod/Frontend', 'go': 'Diller', 'kotlin': 'Kod/Mobil', 'r': 'Diller', 'swift': 'Kod/Mobil', 'perl': 'Diller', 'ruby': 'Diller', 'scala': 'Diller', 'rust': 'Diller', 'assembly': 'Diller', 'bash': 'Kod/Security', 'fortran': 'Diller', 'csharp': 'Diller', 'vb': 'Diller', 'dart': 'Kod/Mobil',
+    'bootstrap': 'Kod/Frontend', 'jquery': 'Kod/Frontend', 'vue': 'Kod/Frontend', 'angular': 'Kod/Frontend', 'w3css': 'Kod/Frontend',
+    'nodejs': 'Kod/Backend', 'django': 'Kod/Backend', 'asp': 'Kod/Backend', 'firebase': 'Kod/DevOps', 'graphql': 'Kod/DevOps',
+    'mongodb': 'Kod/Veri', 'excel': 'Kod/Veri', 'access': 'Kod/Veri',
     'numpy': 'Kod/Veri-Bilimi', 'pandas': 'Kod/Veri-Bilimi', 'matplotlib': 'Kod/Veri-Bilimi', 'statistics': 'Kod/Veri-Bilimi', 'machinelearning': 'Kod/Veri-Bilimi', 'datascience': 'Kod/Veri-Bilimi', 'ai': 'Kod/Veri-Bilimi',
-    'cybersecurity': 'Kod/Security', 'linux': 'Kod/Security', 'docker': 'Kod/Security', 'bash': 'Kod/Security',
-    'flutter': 'Kod/Mobil', 'dart': 'Kod/Mobil', 'kotlin': 'Kod/Mobil', 'swift': 'Kod/Mobil',
-    'git': 'Kod/DevOps', 'docker': 'Kod/DevOps', 'linux': 'Kod/DevOps', 'graphql': 'Kod/DevOps', 'firebase': 'Kod/DevOps'
+    'cybersecurity': 'Kod/Security', 'linux': 'Kod/DevOps', 'docker': 'Kod/DevOps',
+    'flutter': 'Kod/Mobil',
+    'git': 'Kod/DevOps',
   };
   // Klasör Teklifi: hangi ana klasöre ait olduğu ile birlikte göster
   const missingTopicsDetailed = missingTopics.map(topic => ({

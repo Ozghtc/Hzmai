@@ -95,31 +95,6 @@ function App() {
   };
 
   // Eğitim paneli simülasyon fonksiyonları
-  const handleStartEdu = async () => {
-    if (!eduSites.trim()) {
-      setEduResult('Lütfen bir site adresi girin.');
-      return;
-    }
-    setEduResult('Eğitim verisi çekiliyor...');
-    try {
-      const response = await fetch('http://localhost:5050/api/egitim-cek', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url: eduSites.trim() })
-      });
-      const data = await response.json();
-      if (data.hata) {
-        setEduResult('Veri çekilemedi: ' + data.hata);
-        return;
-      }
-      setEduResult(
-        `Başlık: ${data.title}\nBaşlıklar: ${data.headings.join(', ')}\nParagraflar: ${data.paragraphs.length} adet çekildi.`
-      );
-      setRemainingList(data.paragraphs);
-    } catch (err) {
-      setEduResult('Veri çekme sırasında hata oluştu.');
-    }
-  };
   const handleExtract = () => {
     if (eduExtract.trim() === '') return;
     const extractValue = eduExtract.trim().replace(/\s+/g, ' ').toLowerCase();
@@ -152,20 +127,6 @@ function App() {
       return res.status === 200;
     } catch {
       return false;
-    }
-  };
-
-  // Eğitim başlatma fonksiyonu (entegrasyonlu, içerik kontrolü ile)
-  const startTraining = async () => {
-    for (const folder of selectedFolders) {
-      setFolderStatusMap(prev => ({ ...prev, [folder]: '⏳ Başlıyor' }));
-      const exists = await checkContentExists(folder);
-      if (exists) {
-        await new Promise(res => setTimeout(res, 1200));
-        setFolderStatusMap(prev => ({ ...prev, [folder]: '✅ Tamamlandı' }));
-      } else {
-        setFolderStatusMap(prev => ({ ...prev, [folder]: '❌ İçerik Bulunamadı' }));
-      }
     }
   };
 
