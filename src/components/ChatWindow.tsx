@@ -1,25 +1,37 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Box, Typography, TextField, Button } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
+import { addMessage, fetchMessages } from '../hooks/useChat';
 
-const ChatWindow = ({
-  chats, selectedChat, message, setMessage, handleSendMessage, handleKeyDown
-}) => {
-  const bottomRef = useRef(null);
-  const selectedMessages = chats[selectedChat]?.messages;
+const ChatWindow = () => {
+  const chat_id = 1; // Şimdilik sabit
+  const [messages, setMessages] = useState<any[]>([]);
+  const [text, setText] = useState('');
+  const bottomRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    fetchMessages(chat_id).then(({ data }) => setMessages(data || []));
+  }, [chat_id]);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
       bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, 50);
     return () => clearTimeout(timeout);
-  }, [chats, selectedChat, selectedMessages]);
+  }, [messages]);
+
+  const handleSend = async () => {
+    if (!text.trim()) return;
+    await addMessage({ text, sender: 'user', chat_id });
+    setText('');
+    fetchMessages(chat_id).then(({ data }) => setMessages(data || []));
+  };
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh', bgcolor: '#ffffff' }}>
       <Box sx={{ p: 2, bgcolor: '#2c3e50', color: 'white' }}>
         <Typography variant="h6" sx={{ fontFamily: 'Inter, sans-serif' }}>
-          {selectedChat !== null ? chats[selectedChat]?.name : ''}
+          Sohbet 1
         </Typography>
       </Box>
       <div
@@ -36,9 +48,9 @@ const ChatWindow = ({
           maxHeight: 'calc(100vh - 160px)',
         }}
       >
-        {selectedChat !== null && chats[selectedChat]?.messages.map((msg, index) => (
+        {messages.map((msg, index) => (
           <Box
-            key={index}
+            key={msg.id}
             sx={{
               alignSelf: msg.sender === 'user' ? 'flex-end' : 'flex-start',
               maxWidth: { xs: '90%', sm: '70%', md: 400 },
@@ -55,7 +67,7 @@ const ChatWindow = ({
           >
             <Typography variant="body1">{msg.text}</Typography>
             <Typography variant="caption" sx={{ opacity: 0.7, display: 'block', mt: 1 }}>
-              {msg.timestamp}
+              {msg.created_at}
             </Typography>
           </Box>
         ))}
@@ -67,9 +79,9 @@ const ChatWindow = ({
             fullWidth
             variant="outlined"
             placeholder="Mesajınızı yazın..."
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            onKeyDown={handleKeyDown}
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            onKeyDown={e => { if (e.key === 'Enter') handleSend(); }}
             size="small"
             multiline
             minRows={1}
@@ -88,7 +100,7 @@ const ChatWindow = ({
           />
           <Button
             variant="contained"
-            onClick={handleSendMessage}
+            onClick={handleSend}
             endIcon={<SendIcon />}
             sx={{ 
               transition: '0.2s',
